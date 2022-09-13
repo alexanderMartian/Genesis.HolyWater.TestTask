@@ -102,6 +102,7 @@ const EventForm = ({selectedDate, actionType, editEventInfo}) => {
                   </div>
                 )}
                 <button
+                  disabled={!dirty}
                   className={dirty ? styles.buttonActive : styles.buttonDisable}
                   type={'submit'}>
                   Save
