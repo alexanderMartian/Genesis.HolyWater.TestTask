@@ -21,12 +21,14 @@ const CalendarContainer = () => {
       functions.setSelectedMonth(createMonth({date: new Date(year, monthIndex), locale: 'en-US'}));
       functions.setSelectedYear(year);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (state.calendarDays) {
       saveToLS('dateFilterInfo', state.selectedMonth);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.calendarDays]);
 
   const switchDatePicker = () => setIsDatePickerOpen((prev) => !prev);
