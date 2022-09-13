@@ -1,6 +1,6 @@
 import styles from './calendarDay.module.scss';
 import {useSelector} from 'react-redux';
-import {useEffect, useMemo} from 'react';
+import {useEffect} from 'react';
 import {saveToLS} from '../../functions/localStorage';
 import {checkIsToday} from '../../functions/checkIsToday';
 import {checkDateIsEqual} from '../../functions/checkDateIsEqual';
@@ -37,7 +37,7 @@ const CalendarDay = ({state, item, functions}) => {
       <div className={styles.eventWrapper}>
         {event.map((item, index) => {
           if (index >= 3) {
-            return;
+            return null;
           }
           return <CalendarEvent key={item.id * Math.random() * 0.12} item={item} />;
         })}
