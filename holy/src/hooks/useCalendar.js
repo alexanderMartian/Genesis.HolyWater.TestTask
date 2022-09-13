@@ -1,10 +1,9 @@
-import {useEffect, useMemo, useState} from 'react';
+import {useMemo, useState} from 'react';
 import {createDate} from '../functions/createDate';
 import {getMonthsNames} from '../functions/getMonthsNames';
 import {getWeekDaysNames} from '../functions/getWeekDaysNames';
 import {createMonth} from '../functions/createMonth';
 import {getYearsInterval} from '../functions/getYearsInterval';
-import {saveToLS, getFromLS} from '../functions/localStorage';
 
 export const useCalendar = ({locale = 'en-US', date, firstWeekDayNumber = 2}) => {
   const [selectedDate, setSelectedDate] = useState(createDate(date));
@@ -17,9 +16,18 @@ export const useCalendar = ({locale = 'en-US', date, firstWeekDayNumber = 2}) =>
     getYearsInterval(selectedDate.year),
   );
 
-  const monthsNames = useMemo(() => getMonthsNames(locale), []);
-  const weekDaysNames = useMemo(() => getWeekDaysNames({firstWeekDayNumber, locale}), []);
-  const days = useMemo(() => selectedMonth.createMonthDays(), [selectedMonth, selectedYear]);
+  const monthsNames = useMemo(() => {
+    return getMonthsNames(locale);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const weekDaysNames = useMemo(() => {
+    return getWeekDaysNames({firstWeekDayNumber, locale})
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const days = useMemo(() => {
+    return selectedMonth.createMonthDays();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedMonth, selectedYear]);
 
   const calendarDays = useMemo(() => {
     const prevMonthDays = createMonth({
@@ -62,6 +70,7 @@ export const useCalendar = ({locale = 'en-US', date, firstWeekDayNumber = 2}) =>
     }
 
     return result;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedMonth.year, selectedMonth.monthIndex, selectedYear]);
 
   const onClickArrow = (direction) => {
