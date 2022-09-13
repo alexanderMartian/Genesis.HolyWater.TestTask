@@ -1,12 +1,12 @@
-import {Form, Formik} from "formik";
-import styles from "./eventForm.module.scss";
-import CustomField from "../CustomField/CustomField";
-import * as yup from "yup";
-import dateRegex from "./regularExpression/dateRegex";
-import {useDispatch, useSelector} from "react-redux";
-import {addEvent, editEvent, deleteEvent} from "../../store/reducers/eventsReducer";
-import {addInfoForEdit, switchModal} from "../../store/reducers/modalReducer";
-import {ReactComponent as DeleteIcon} from "./svg/delete.svg";
+import {Form, Formik} from 'formik';
+import styles from './eventForm.module.scss';
+import CustomField from '../CustomField/CustomField';
+import * as yup from 'yup';
+import dateRegex from './regularExpression/dateRegex';
+import {useDispatch, useSelector} from 'react-redux';
+import {addEvent, editEvent, deleteEvent} from '../../store/reducers/eventsReducer';
+import {addInfoForEdit, switchModal} from '../../store/reducers/modalReducer';
+import {ReactComponent as DeleteIcon} from './svg/delete.svg';
 
 const EventForm = ({selectedDate, actionType, editEventInfo}) => {
   const {events} = useSelector((state) => state.events);
@@ -17,14 +17,14 @@ const EventForm = ({selectedDate, actionType, editEventInfo}) => {
     month: '2-digit',
     day: '2-digit',
   });
-  const isAddForm = actionType === "Add";
-  const formName = isAddForm ? "Add new idea item" : "Edit idea item";
+  const isAddForm = actionType === 'Add';
+  const formName = isAddForm ? 'Add new idea item' : 'Edit idea item';
 
   const initialValues = {
-    title: editEventInfo.title ? editEventInfo?.title : "",
-    description: editEventInfo.description ? editEventInfo?.description : "",
+    title: editEventInfo.title ? editEventInfo?.title : '',
+    description: editEventInfo.description ? editEventInfo?.description : '',
     date: currentDate,
-    time: editEventInfo.time ? editEventInfo?.time : "",
+    time: editEventInfo.time ? editEventInfo?.time : '',
   };
 
   const handleSubmit = (values, actions) => {
@@ -36,9 +36,9 @@ const EventForm = ({selectedDate, actionType, editEventInfo}) => {
         ...values,
         createdTime: editEventInfo.createdTime,
         id: editEventInfo.id,
-        editedTime: currentTime
+        editedTime: currentTime,
       };
-      dispatch(editEvent(event))
+      dispatch(editEvent(event));
     }
 
     if (isAddForm) {
@@ -51,7 +51,7 @@ const EventForm = ({selectedDate, actionType, editEventInfo}) => {
 
   const yupValidationSchema = yup.object().shape({
     title: yup.string().required('Field is required'),
-    date: yup.string().required('Field is required ').matches(dateRegex, "Incorrect date"),
+    date: yup.string().required('Field is required ').matches(dateRegex, 'Incorrect date'),
   });
 
   return (
@@ -59,45 +59,60 @@ const EventForm = ({selectedDate, actionType, editEventInfo}) => {
       initialValues={initialValues}
       onSubmit={handleSubmit}
       validationSchema={yupValidationSchema}>
-      { ({dirty}) => {
+      {({dirty}) => {
         return (
           <>
             <Form className={styles.form}>
               <div>
                 <div> {formName} </div>
-                  { !isAddForm &&
-                    <div className={styles.createEditInfo}>
-                      <span> Created at: {editEventInfo.date} {editEventInfo.createdTime} </span>
-                      { editEventInfo.editedTime && <span>Edited at: {editEventInfo.date} {editEventInfo.editedTime} </span> }
-                    </div>
-                  }
+                {!isAddForm && (
+                  <div className={styles.createEditInfo}>
+                    <span>
+                      {' '}
+                      Created at: {editEventInfo.date} {editEventInfo.createdTime}{' '}
+                    </span>
+                    {editEventInfo.editedTime && (
+                      <span>
+                        Edited at: {editEventInfo.date} {editEventInfo.editedTime}{' '}
+                      </span>
+                    )}
+                  </div>
+                )}
               </div>
               <CustomField name="title" label="title" type="text" />
-              <CustomField name="description" label="description" type="text" elementType={"textarea"} />
+              <CustomField
+                name="description"
+                label="description"
+                type="text"
+                elementType={'textarea'}
+              />
               <div className={styles.dateTimeWrapper}>
-                <CustomField name="date" label="date" type="text"/>
+                <CustomField name="date" label="date" type="text" />
                 <CustomField name="time" label="time" type="time" />
               </div>
               <div className={styles.actionButtons}>
-                { !isAddForm &&
-                <div onClick={ ()=> {
-                  dispatch(deleteEvent(editEventInfo.id));
-                  dispatch(switchModal());
-                  dispatch(addInfoForEdit({}))
-                }}>
-                  <DeleteIcon/>
-                </div>}
+                {!isAddForm && (
+                  <div
+                    onClick={() => {
+                      dispatch(deleteEvent(editEventInfo.id));
+                      dispatch(switchModal());
+                      dispatch(addInfoForEdit({}));
+                    }}>
+                    <DeleteIcon />
+                  </div>
+                )}
                 <button
                   className={dirty ? styles.buttonActive : styles.buttonDisable}
-                  type={"submit"}
-                >Save</button>
+                  type={'submit'}>
+                  Save
+                </button>
               </div>
             </Form>
           </>
-        )
+        );
       }}
     </Formik>
-  )
-}
+  );
+};
 
 export default EventForm;

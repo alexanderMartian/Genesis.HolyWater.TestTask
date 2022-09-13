@@ -1,7 +1,6 @@
-import styles from "./datePickerYears.module.scss";
+import styles from './datePickerYears.module.scss';
 
 const DatePickerYears = ({state, functions}) => {
-
   return (
     <div className={styles.calendarPickItemsContainer}>
       <div className={styles.calendarNoChooseYear}>{state.selectedYearsInterval[0] - 1}</div>
@@ -13,16 +12,15 @@ const DatePickerYears = ({state, functions}) => {
         return (
           <div
             key={year + Math.random() * 0.25}
-            onClick={ () => {
+            onClick={() => {
               functions.selectCalendarYear(year);
               functions.setSelectedYear(year);
-            } }
+            }}
             className={[
               styles.calendarPickItem,
               isCurrentYear ? styles.calendarSelectedItem : '',
-              isSelectedYear ? styles.calendarTodayItem : ''
-            ].join(' ')}
-          >
+              isSelectedYear ? styles.calendarTodayItem : '',
+            ].join(' ')}>
             {year}
           </div>
         );
@@ -32,7 +30,7 @@ const DatePickerYears = ({state, functions}) => {
         {state.selectedYearsInterval[state.selectedYearsInterval.length - 1] + 1}
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default DatePickerYears;

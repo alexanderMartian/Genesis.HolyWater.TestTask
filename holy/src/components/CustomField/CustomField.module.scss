@@ -10,7 +10,7 @@
 
 .customTextArea {
   @extend .customField;
-  & >textarea {
+  & > textarea {
     max-width: 100%;
     min-width: 100%;
     min-height: 100px;
@@ -59,4 +59,3 @@
 .err {
   border-color: red !important;
 }
-

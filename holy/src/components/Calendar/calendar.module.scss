@@ -19,10 +19,10 @@
   grid-template-rows: 1fr;
   font-size: 8px;
   border: 1px solid grey;
-  & >:nth-child(n+8) {
+  & > :nth-child(n + 8) {
     border-top: 1px solid grey;
   }
-  & >:not(:nth-child(7n)) {
+  & > :not(:nth-child(7n)) {
     border-right: 1px solid grey;
   }
   & > :nth-child(3) {
@@ -33,4 +33,3 @@
 .wrapper {
   margin: 50px 70px;
 }
-

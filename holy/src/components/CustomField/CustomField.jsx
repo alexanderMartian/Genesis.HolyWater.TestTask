@@ -7,7 +7,7 @@ const CustomField = (props) => {
   const isError = meta.error && meta.touched;
 
   return (
-    <div className={label === "description" ? styles.customTextArea  : styles.customField}>
+    <div className={label === 'description' ? styles.customTextArea : styles.customField}>
       <span className={styles.label}>{field.value ? label : '\u00A0'}</span>
       <Field
         {...field}
@@ -20,6 +20,6 @@ const CustomField = (props) => {
       <span className={styles.errLabel}>{isError ? meta.error : '\u00A0'}</span>
     </div>
   );
-}
+};
 
 export default CustomField;

@@ -1,22 +1,24 @@
-import styles from "./calendarDay.module.scss";
-import {useSelector} from "react-redux";
-import {useEffect, useMemo} from "react";
-import {saveToLS} from "../../functions/localStorage";
-import {checkIsToday} from "../../functions/checkIsToday";
-import {checkDateIsEqual} from "../../functions/checkDateIsEqual";
-import CalendarEvent from "../CalendarEvent/CalendarEvent";
+import styles from './calendarDay.module.scss';
+import {useSelector} from 'react-redux';
+import {useEffect, useMemo} from 'react';
+import {saveToLS} from '../../functions/localStorage';
+import {checkIsToday} from '../../functions/checkIsToday';
+import {checkDateIsEqual} from '../../functions/checkDateIsEqual';
+import CalendarEvent from '../CalendarEvent/CalendarEvent';
 
 const CalendarDay = ({state, item, functions}) => {
   const {events} = useSelector((state) => state.events);
-  useEffect( () => saveToLS("events", events), [events]);
+  useEffect(() => saveToLS('events', events), [events]);
 
   const isToday = checkIsToday(item.date);
   const isSelectedDay = checkDateIsEqual(item.date, state.selectedDate.date);
   const isAdditionalDay = item.monthIndex !== state.selectedMonth.monthIndex;
-  const dayStyles = [styles.calendarDaysItem,
+  const dayStyles = [
+    styles.calendarDaysItem,
     isToday ? styles.calendarToday : '',
     isSelectedDay ? styles.calendarSelected : '',
-    isAdditionalDay ? styles.calendarAdditional : ''].join(' ');
+    isAdditionalDay ? styles.calendarAdditional : '',
+  ].join(' ');
 
   const currentDay = item.date.toLocaleDateString('eu-RU', {
     year: 'numeric',
@@ -24,26 +26,25 @@ const CalendarDay = ({state, item, functions}) => {
     day: '2-digit',
   });
 
-  const event = events.filter( item => item.date === currentDay);
+  const event = events.filter((item) => item.date === currentDay);
 
   return (
-    <div className={dayStyles}
-         onClick={ () => functions.setSelectedDate(item)}>
+    <div className={dayStyles} onClick={() => functions.setSelectedDate(item)}>
       <div className={styles.dayNameNumber}>
         <div>{item.dayNumber}</div>
         <div>{item.dayShort}</div>
       </div>
       <div className={styles.eventWrapper}>
         {event.map((item, index) => {
-           if (index >=3) {
-             return;
-           }
-           return <CalendarEvent key={item.id * Math.random() * 0.12} item={item}/>
+          if (index >= 3) {
+            return;
+          }
+          return <CalendarEvent key={item.id * Math.random() * 0.12} item={item} />;
         })}
         {event.length > 3 && <span>more...</span>}
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default CalendarDay;

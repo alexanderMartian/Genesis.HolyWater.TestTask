@@ -1,7 +1,7 @@
-import { createDate } from './createDate';
+import {createDate} from './createDate';
 
 export const formatDate = (date, format) => {
-  const d = createDate({ date });
+  const d = createDate({date});
 
   return format
     .replace(/\bYYYY\b/, d.year.toString())

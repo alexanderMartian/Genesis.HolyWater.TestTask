@@ -1,17 +1,16 @@
-import { createDate } from './createDate';
-import { createMonth } from './createMonth';
+import {createDate} from './createDate';
+import {createMonth} from './createMonth';
 
-export const createYear = (
-  {
-    locale = 'en-US',
-    year = createDate({}).year,
-    monthNumber = createDate({}).monthNumber
-  }) => {
-
+export const createYear = ({
+  locale = 'en-US',
+  year = createDate({}).year,
+  monthNumber = createDate({}).monthNumber,
+}) => {
   const monthCount = 12;
   const month = createMonth({date: new Date(year, monthNumber - 1), locale});
 
-  const getMonthDays = (monthIndex) => createMonth({date: new Date(year, monthIndex), locale}).createMonthDays();
+  const getMonthDays = (monthIndex) =>
+    createMonth({date: new Date(year, monthIndex), locale}).createMonthDays();
 
   const createYearMonths = () => {
     const Months = [];
@@ -26,6 +25,6 @@ export const createYear = (
   return {
     createYearMonths,
     month,
-    year
+    year,
   };
 };

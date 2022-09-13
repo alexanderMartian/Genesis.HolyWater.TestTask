@@ -1,9 +1,9 @@
-import { createDate } from './createDate';
-import { getMonthNumberOfDays } from './getMonthNumberOfDays';
+import {createDate} from './createDate';
+import {getMonthNumberOfDays} from './getMonthNumberOfDays';
 
 export const createMonth = ({date = new Date(), locale = 'en-US'}) => {
   const d = createDate({locale, date});
-  const { month: monthName, year, monthNumber, monthIndex } = d;
+  const {month: monthName, year, monthNumber, monthIndex} = d;
 
   const getDay = (dayNumber) => createDate({locale, date: new Date(year, monthIndex, dayNumber)});
 
@@ -23,6 +23,6 @@ export const createMonth = ({date = new Date(), locale = 'en-US'}) => {
     monthIndex,
     monthNumber,
     year,
-    createMonthDays
+    createMonthDays,
   };
 };

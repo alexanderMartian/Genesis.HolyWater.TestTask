@@ -1,7 +1,6 @@
-import styles from "./DatePickerMonths.module.scss";
+import styles from './DatePickerMonths.module.scss';
 
 const DatePickerMonths = ({state, functions}) => {
-
   return (
     <div className={styles.calendarPickItemsContainer}>
       {state.monthsNames.map((monthName) => {
@@ -17,15 +16,14 @@ const DatePickerMonths = ({state, functions}) => {
             className={[
               styles.calendarPickItem,
               isSelectedMonth ? styles.calendarSelectedItem : '',
-              isCurrentMonth ? styles.calendarTodayItem : ''
-            ].join(' ')}
-          >
+              isCurrentMonth ? styles.calendarTodayItem : '',
+            ].join(' ')}>
             {monthName.monthShort}
           </div>
         );
       })}
     </div>
-  )
-}
+  );
+};
 
 export default DatePickerMonths;

@@ -2,8 +2,8 @@ import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
   isActive: false,
-  actionType: "",
-  editEventInfo: {}
+  actionType: '',
+  editEventInfo: {},
 };
 
 const modalSlice = createSlice({
@@ -19,8 +19,8 @@ const modalSlice = createSlice({
     addModalType(state, payload) {
       state.actionType = payload.payload;
     },
-  }
-})
+  },
+});
 
 export default modalSlice.reducer;
 export const {switchModal, addInfoForEdit, addModalType} = modalSlice.actions;
