@@ -12,10 +12,15 @@ import {
 } from '../../store/reducers/eventsReducer';
 import {addInfoForEdit, switchModal} from '../../store/reducers/modalReducer';
 import {ReactComponent as DeleteIcon} from './svg/delete.svg';
+import {useEffect} from 'react';
 
 const EventForm = ({selectedDate, actionType, editEventInfo}) => {
-  const {isServerLive} = useSelector((state) => state.events);
+  const {isServerLive, events} = useSelector((state) => state.events);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log(events, 'events');
+  }, [events]);
 
   const currentDate = selectedDate.date.toLocaleDateString('eu-RU', {
     year: 'numeric',
@@ -47,7 +52,10 @@ const EventForm = ({selectedDate, actionType, editEventInfo}) => {
     }
 
     if (isAddForm) {
-      const event = {...values, createdTime: currentTime};
+      const idCalc = events.length === 0 ? 1 : events[events.length - 1].id + 1;
+      const event = isServerLive
+        ? {...values, createdTime: currentTime}
+        : {...values, createdTime: currentTime, id: idCalc};
       dispatch(isServerLive ? addEvent(event) : addEventNotLog(event));
     }
     actions.resetForm();

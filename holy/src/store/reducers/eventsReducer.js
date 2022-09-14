@@ -24,17 +24,17 @@ const eventSlice = createSlice({
       state.events[index] = payload.payload;
     },
     deleteEventNotLog(state, payload) {
-      const index = state.events.findIndex((item) => item.id === payload.payload);
-      state.events.splice(index);
+      console.log(payload, 'ID');
+      state.events = state.events.filter((item) => item.id !== payload.payload);
     },
   },
   extraReducers: {
     [getEvents.fulfilled]: (state, action) => {
-      state.events = action.payload.length > 0 ? action.payload : getFromLS('events');
+      state.events = action.payload;
     },
     [getEvents.rejected]: (state) => {
       state.isServerLive = false;
-      state.events = getFromLS('events');
+      state.events = getFromLS('events') ? getFromLS('events') : [];
     },
     [addEvent.fulfilled]: (state, action) => {
       state.events.push(action.payload);
@@ -44,8 +44,7 @@ const eventSlice = createSlice({
       state.events[index] = action.payload;
     },
     [deleteEvent.fulfilled]: (state, action) => {
-      const index = state.events.findIndex((item) => item.id === action.payload);
-      state.events.splice(index);
+      state.events = state.events.filter((item) => item.id !== action.payload);
     },
   },
 });
