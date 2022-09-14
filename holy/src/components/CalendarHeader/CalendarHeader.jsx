@@ -1,7 +1,7 @@
 import styles from './calendarHeader.module.scss';
 import {ReactComponent as AddIcon} from '../Calendar/svg/addIcon.svg';
 import {addModalType, switchModal} from '../../store/reducers/modalReducer';
-import {ReactComponent as Arrow} from '../../images/arrow.svg';
+import {ReactComponent as Arrow} from './svg/arrow.svg';
 import {ReactComponent as DatePickerIcon} from '../Calendar/svg/datePicker.svg';
 import {useDispatch} from 'react-redux';
 

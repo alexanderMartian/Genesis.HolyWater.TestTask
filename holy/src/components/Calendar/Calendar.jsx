@@ -3,7 +3,6 @@ import CalendarHeader from '../CalendarHeader/CalendarHeader';
 import CalendarDay from '../CalendarDay/CalendarDay';
 
 const Calendar = ({state, functions, switchDatePicker}) => {
-
   return (
     <>
       <CalendarHeader switchDatePicker={switchDatePicker} functions={functions} state={state} />

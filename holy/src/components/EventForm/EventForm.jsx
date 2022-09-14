@@ -5,11 +5,16 @@ import * as yup from 'yup';
 import dateRegex from './regularExpression/dateRegex';
 import {useDispatch, useSelector} from 'react-redux';
 import {addEvent, editEvent, deleteEvent} from '../../store/reducers/eventsReducer';
+import {
+  addEventNotLog,
+  editEventNotLog,
+  deleteEventNotLog,
+} from '../../store/reducers/eventsReducer';
 import {addInfoForEdit, switchModal} from '../../store/reducers/modalReducer';
 import {ReactComponent as DeleteIcon} from './svg/delete.svg';
 
 const EventForm = ({selectedDate, actionType, editEventInfo}) => {
-  const {events} = useSelector((state) => state.events);
+  const {isServerLive} = useSelector((state) => state.events);
   const dispatch = useDispatch();
 
   const currentDate = selectedDate.date.toLocaleDateString('eu-RU', {
@@ -38,12 +43,12 @@ const EventForm = ({selectedDate, actionType, editEventInfo}) => {
         id: editEventInfo.id,
         editedTime: currentTime,
       };
-      dispatch(editEvent(event));
+      dispatch(isServerLive ? editEvent(event) : editEventNotLog(event));
     }
 
     if (isAddForm) {
-      const event = {...values, createdTime: currentTime, id: events.length + 1};
-      dispatch(addEvent(event));
+      const event = {...values, createdTime: currentTime};
+      dispatch(isServerLive ? addEvent(event) : addEventNotLog(event));
     }
     actions.resetForm();
     dispatch(switchModal());
@@ -94,7 +99,11 @@ const EventForm = ({selectedDate, actionType, editEventInfo}) => {
                 {!isAddForm && (
                   <div
                     onClick={() => {
-                      dispatch(deleteEvent(editEventInfo.id));
+                      dispatch(
+                        isServerLive
+                          ? deleteEvent(editEventInfo.id)
+                          : deleteEventNotLog(editEventInfo.id),
+                      );
                       dispatch(switchModal());
                       dispatch(addInfoForEdit({}));
                     }}>

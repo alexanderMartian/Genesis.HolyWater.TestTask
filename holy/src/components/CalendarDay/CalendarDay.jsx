@@ -1,14 +1,11 @@
 import styles from './calendarDay.module.scss';
 import {useSelector} from 'react-redux';
-import {useEffect} from 'react';
-import {saveToLS} from '../../functions/localStorage';
 import {checkIsToday} from '../../functions/checkIsToday';
 import {checkDateIsEqual} from '../../functions/checkDateIsEqual';
 import CalendarEvent from '../CalendarEvent/CalendarEvent';
 
 const CalendarDay = ({state, item, functions}) => {
   const {events} = useSelector((state) => state.events);
-  useEffect(() => saveToLS('events', events), [events]);
 
   const isToday = checkIsToday(item.date);
   const isSelectedDay = checkDateIsEqual(item.date, state.selectedDate.date);

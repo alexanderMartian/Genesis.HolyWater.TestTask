@@ -21,7 +21,7 @@ export const useCalendar = ({locale = 'en-US', date, firstWeekDayNumber = 2}) =>
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const weekDaysNames = useMemo(() => {
-    return getWeekDaysNames({firstWeekDayNumber, locale})
+    return getWeekDaysNames({firstWeekDayNumber, locale});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const days = useMemo(() => {

@@ -1,27 +1,54 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import {getData, addData, editData, deleteData} from '../../api/events';
 import {getFromLS} from '../../functions/localStorage';
 
+export const getEvents = createAsyncThunk('events/get', async () => await getData());
+export const addEvent = createAsyncThunk('events/add', async (event) => await addData(event));
+export const editEvent = createAsyncThunk('events/edit', async (event) => await editData(event));
+export const deleteEvent = createAsyncThunk('events/delete', async (id) => await deleteData(id));
+
 const initialState = {
-  events: getFromLS('events') ? getFromLS('events') : [],
+  events: [],
+  isServerLive: true,
 };
 
 const eventSlice = createSlice({
   name: 'events',
   initialState,
   reducers: {
-    addEvent(state, payload) {
+    addEventNotLog(state, payload) {
       state.events.push(payload.payload);
     },
-    editEvent(state, payload) {
+    editEventNotLog(state, payload) {
       const index = state.events.findIndex((item) => item.id === payload.payload.id);
       state.events[index] = payload.payload;
     },
-    deleteEvent(state, payload) {
+    deleteEventNotLog(state, payload) {
       const index = state.events.findIndex((item) => item.id === payload.payload);
+      state.events.splice(index);
+    },
+  },
+  extraReducers: {
+    [getEvents.fulfilled]: (state, action) => {
+      state.events = action.payload.length > 0 ? action.payload : getFromLS('events');
+    },
+    [getEvents.rejected]: (state) => {
+      state.isServerLive = false;
+      state.events = getFromLS('events');
+    },
+    [addEvent.fulfilled]: (state, action) => {
+      state.events.push(action.payload);
+    },
+    [editEvent.fulfilled]: (state, action) => {
+      const index = state.events.findIndex((item) => item.id === action.payload.id);
+      state.events[index] = action.payload;
+    },
+    [deleteEvent.fulfilled]: (state, action) => {
+      const index = state.events.findIndex((item) => item.id === action.payload);
       state.events.splice(index);
     },
   },
 });
 
+export const {addEventNotLog, editEventNotLog, deleteEventNotLog} = eventSlice.actions;
 export default eventSlice.reducer;
-export const {addEvent, editEvent, deleteEvent} = eventSlice.actions;
