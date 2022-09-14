@@ -24,7 +24,6 @@ const eventSlice = createSlice({
       state.events[index] = payload.payload;
     },
     deleteEventNotLog(state, payload) {
-      console.log(payload, 'ID');
       state.events = state.events.filter((item) => item.id !== payload.payload);
     },
   },
